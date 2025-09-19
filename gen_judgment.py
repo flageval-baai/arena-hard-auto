@@ -41,17 +41,26 @@ def pairwise_judgment(question, baseline, answer, reference, configs, settings):
     if reference:
         prompt_args[f"REFERENCE"] = reference["messages"][-1]["content"]['answer']
         
-    user_prompt = configs["prompt_template"].format(**prompt_args)
-    messages = [
-        {
-            "role": "system", 
-            "content": JUDGE_SETTINGS[question["category"]]["system_prompt"],
-        },
-        {
-            "role": "user", 
-            "content": user_prompt,
-        }
-    ]
+    if "user_template" in configs:
+        user_prompt = configs["user_template"].format(**prompt_args)
+        messages = [
+            {
+                "role": "user", 
+                "content": user_prompt,
+            }
+        ]
+    if "prompt_template" in configs:
+        user_prompt = configs["prompt_template"].format(**prompt_args)
+        messages = [
+            {
+                "role": "system", 
+                "content": JUDGE_SETTINGS[question["category"]]["system_prompt"],
+            },
+            {
+                "role": "user", 
+                "content": user_prompt,
+            }
+        ]
 
     # build arguments for api completions
     kwargs = settings | {

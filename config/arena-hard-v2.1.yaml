@@ -1,0 +1,27 @@
+# using one user content as Messages
+
+# judge_model: gpt-4.5-preview (This judge is goated)
+
+# judge_model: gemini-2.5
+# temperature: 1.0
+# max_tokens: 32000
+
+judge_model: gemini-2.5
+temperature: 0.0
+max_tokens: 16000
+
+bench_name: arena-hard-v2.1
+
+reference: null
+
+regex_patterns:
+  - \[\[([AB<>=]+)\]\]
+  - \[([AB<>=]+)\]
+
+
+user_template: "You are a helpful assistant for evaluating the quality of outputs for a given instruction. Your goal is to choose whether output (a) or output (b) is better and assign a confidence score (0-100). Evaluate the two outputs below—each produced by a different AI chatbot—and return ONLY the following JSON: {{\"selected_output\":\"[[A>>B]]\" or \"[[A>B]]\" or \"[[A=B]]\" or \"[[B>A]]\" or \"[[B>>A]]\",\"confidence_score\":a score from 0-100,\"explanation\":\"your detailed reasoning\"}}. Note: [[A>>B]] means A is significantly better, [[A>B]] means A is slightly better, [[A=B]] means tie, [[B>A]] means B is slightly better, [[B>>A]] means B is significantly better.\nQuestion: {QUESTION}\nAssistant A's answer: {ANSWER_A}\nAssistant B's answer: {ANSWER_B}\nYour response MUST use only the JSON format above, output nothing else, and do not use the % symbol."
+
+model_list:
+  - qwq-32b
+  
+
